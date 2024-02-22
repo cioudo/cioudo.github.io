@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scratch Project Data</title>
+</head>
+<body>
+    <h1>Project Data</h1>
+    <label for="projectIdInput">Enter Scratch Project ID:</label>
+    <input type="text" id="projectIdInput" placeholder="Enter project ID...">
+    <button onclick="fetchProjectData()">Fetch Data</button>
+    
+    <div id="projectData"></div>
+
+    <script>
+        function fetchProjectData() {
+            const projectId = document.getElementById('projectIdInput').value.trim();
+            if (!projectId) {
+                alert("Please enter a project ID.");
+                return;
+            }
+            
+            const apiUrl = `https://corsproxy.io/?https://api.scratch.mit.edu/projects/${projectId}`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const projectDataDiv = document.getElementById('projectData');
+                    projectDataDiv.innerHTML = `
+                        <img src="${data.image}" alt="Project Image" />
+                        <p><strong>ID:</strong> ${data.id}</p>
+                        <p><strong>Title:</strong> ${data.title}</p>
+                        <p><strong>Description:</strong> ${data.description}</p>
+                        <p><strong>Instructions:</strong> ${data.instructions}</p>
+                        <p><strong>Visibility:</strong> ${data.visibility}</p>
+                        <p><strong>Author:</strong> ${data.author.username}</p>
+                    `;
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    const projectDataDiv = document.getElementById('projectData');
+                    projectDataDiv.innerHTML = '<p>Error fetching project data. Please try again later.</p>';
+                });
+        }
+    </script>
+</body>
+</html>
