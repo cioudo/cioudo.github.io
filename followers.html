@@ -1,0 +1,58 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Followers/Following Loader</title>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <input type="text" id="username" placeholder="Enter Username">
+    <input type="number" id="startPage" placeholder="Starting Page Number">
+    <button onclick="loadUsers('followers')">Load Followers</button>
+    <button onclick="loadUsers('following')">Load Following</button>
+    <div id="counter">Followers/Following fetched: 0</div> <!-- Counter display -->
+    <div id="result"></div>
+</div>
+
+<script>
+    var loading = false; // Flag to track if loading is in progress
+    var userCounter = 0; // Counter for fetched users
+
+    function loadUsers(type) {
+        var username = $('#username').val(); // Utilize jQuery to get the input value
+        var startPage = $('#startPage').val(); // Get the starting page number
+        var page = startPage ? parseInt(startPage) : 1; // Convert to integer, default to 1 if not provided
+        userCounter = 0; // Reset counter
+        loading = true; // Set loading flag to true
+
+        // Clear old followers/following before loading new ones
+        $('#result').empty();
+
+        function load() {
+            $.get(`https://scratch.mit.edu/users/${username}/${type}/?page=${page}`, loaded);
+        }
+
+        function loaded(data) {
+            var users = $(data).find('span.title > a'); // Use jQuery to find users directly
+            var $out = $('#result');
+
+            users.each(function() {
+                var user = $(this).text().trim(); // Use $(this) to reference the current user
+                $out.append(user + '<br>');
+                userCounter++; // Increment counter for each fetched user
+            });
+
+            page++;
+            $('#counter').text(`Followers/Following fetched: ${userCounter}`); // Update counter display
+
+            load(); // Call load function recursively
+        }
+
+        load();
+    }
+</script>
+
+</body>
+</html>
