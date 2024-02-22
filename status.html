@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Scratch MIT Status</title>
+<title>Scratch Status</title>
 </head>
 <body>
+  <h1>Scratch Status</h1>
   <div id="status"></div>
 
   <script>
@@ -32,6 +33,8 @@
             <p>Uptime: ${data.uptime} seconds</p>
             <p>Load: ${data.load}</p>
             <p>Timestamp: ${new Date(data.timestamp)}</p>
+            <p>Connected: ${data.cache.connected}</p>
+            <p>Ready: ${data.cache.ready}</p>
           `;
         })
         .catch(error => {
