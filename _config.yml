@@ -1,0 +1,16 @@
+theme: jekyll-theme-minimal
+
+# Aanpassingen voor moderne look en Arial-lettertype
+fonts:
+  - name: Arial
+    url: https://fonts.googleapis.com/css2?family=Arial:wght@400;700&display=swap
+    weight: 400,700
+
+# Aanvullende aanpassingen voor moderne uitstraling
+style:
+  body:
+    font-family: 'Arial', sans-serif
+    font-weight: 400
+  h1, h2, h3, h4, h5, h6:
+    font-family: 'Arial', sans-serif
+    font-weight: 700
