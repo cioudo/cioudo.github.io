@@ -29,7 +29,6 @@
                     const userDataDiv = document.getElementById('userData');
                     userDataDiv.innerHTML = `
                         <img src="${data.profile.images['90x90']}" alt="Profile Picture" />
-                        <h2>User Data</h2>
                         <p><strong>ID:</strong> ${data.id}</p>
                         <p><strong>Username:</strong> ${data.username}</p>
                         <p><strong>Joined:</strong> ${new Date(data.history.joined).toDateString()}</p>
