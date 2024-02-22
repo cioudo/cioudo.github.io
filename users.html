@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scratch User Data</title>
+</head>
+<body>
+    <div id="userData"></div>
+
+    <script>
+        // Replace <username> with the username you want to fetch data for
+        const username = "mres";
+        const apiUrl = `https://corsproxy.io/?https://api.scratch.mit.edu/users/${username}`;
+
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const userDataDiv = document.getElementById('userData');
+                userDataDiv.innerHTML = `
+                    <h2>User Data</h2>
+                    <p><strong>ID:</strong> ${data.id}</p>
+                    <p><strong>Username:</strong> ${data.username}</p>
+                    <p><strong>Joined:</strong> ${new Date(data.history.joined).toDateString()}</p>
+                    <p><strong>Status:</strong> ${data.profile.status}</p>
+                    <p><strong>Bio:</strong> ${data.profile.bio}</p>
+                    <p><strong>Country:</strong> ${data.profile.country}</p>
+                    <img src="${data.profile.images['90x90']}" alt="Profile Picture" />
+                `;
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                const userDataDiv = document.getElementById('userData');
+                userDataDiv.innerHTML = '<p>Error fetching user data. Please try again later.</p>';
+            });
+    </script>
+</body>
+</html>
