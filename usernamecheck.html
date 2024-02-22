@@ -28,7 +28,6 @@
                 .then(data => {
                     const statusMessageDiv = document.getElementById('statusMessage');
                     statusMessageDiv.innerHTML = `
-                        <p><strong>Username:</strong> ${data.username}</p>
                         <p><strong>Status:</strong> ${data.msg}</p>
                     `;
                 })
