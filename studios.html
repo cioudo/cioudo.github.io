@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scratch Studio Data</title>
+</head>
+<body>
+    <h1>Studio Data</h1>
+    <label for="studioIdInput">Enter Scratch Studio ID:</label>
+    <input type="text" id="studioIdInput" placeholder="Enter studio ID...">
+    <button onclick="fetchStudioData()">Fetch Data</button>
+    
+    <div id="studioData"></div>
+
+    <script>
+        function fetchStudioData() {
+            const studioId = document.getElementById('studioIdInput').value.trim();
+            if (!studioId) {
+                alert("Please enter a studio ID.");
+                return;
+            }
+            
+            const apiUrl = `https://corsproxy.io/?https://api.scratch.mit.edu/studios/${studioId}`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const studioDataDiv = document.getElementById('studioData');
+                    studioDataDiv.innerHTML = `
+                        <img src="${data.image}" alt="Studio Image" />
+                        <p><strong>ID:</strong> ${data.id}</p>
+                        <p><strong>Title:</strong> ${data.title}</p>
+                        <p><strong>Description:</strong> ${data.description}</p>
+                        <p><strong>Host:</strong> ${data.host}</p>
+                        <p><strong>Visibility:</strong> ${data.visibility}</p>
+                        <p><strong>Public:</strong> ${data.public}</p>
+                        <p><strong>Open to All:</strong> ${data.open_to_all}</p>
+                        <p><strong>Comments Allowed:</strong> ${data.comments_allowed}</p>
+                    `;
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    const studioDataDiv = document.getElementById('studioData');
+                    studioDataDiv.innerHTML = '<p>Error fetching studio data. Please try again later.</p>';
+                });
+        }
+    </script>
+</body>
+</html>
