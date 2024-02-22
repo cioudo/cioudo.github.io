@@ -1,1 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scratch Messages Count</title>
+</head>
+<body>
+    <h1>Scratch Messages Count Tool</h1>
+    <label for="username">Enter Username:</label>
+    <input type="text" id="username" name="username">
+    <button onclick="fetchMessageCount()">Fetch Message Count</button>
+    <p id="message-count"></p>
 
+    <script>
+        // Function to fetch message count from Scratch API via corsproxy.io
+        function fetchMessageCount() {
+            const username = document.getElementById('username').value;
+            fetch(`https://corsproxy.io/?https://cors-anywhere.herokuapp.com/https://api.scratch.mit.edu/health`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Log the response
+                    console.log('Response:', data);
+
+                    // Process the retrieved data
+                    const messageCount = data.connected;
+                    const messageCountElement = document.getElementById('message-count');
+                    messageCountElement.textContent = `User ${username} has ${messageCount} messages.`;
+                })
+                .catch(error => console.error('Error fetching message count:', error));
+        }
+
+    </script>
+</body>
+</html>
