@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Check Username Status</title>
+</head>
+<body>
+    <h1>Username Check</h1>
+    <label for="usernameInput">Enter Scratch Username:</label>
+    <input type="text" id="usernameInput" placeholder="Enter username...">
+    <button onclick="checkUsername()">Check Status</button>
+    
+    <div id="statusMessage"></div>
+
+    <script>
+        function checkUsername() {
+            const username = document.getElementById('usernameInput').value.trim();
+            if (!username) {
+                alert("Please enter a username.");
+                return;
+            }
+            
+            const apiUrl = `https://corsproxy.io/?https://api.scratch.mit.edu/accounts/checkusername/${username}`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const statusMessageDiv = document.getElementById('statusMessage');
+                    statusMessageDiv.innerHTML = `
+                        <p><strong>Username:</strong> ${data.username}</p>
+                        <p><strong>Status:</strong> ${data.msg}</p>
+                    `;
+                })
+                .catch(error => {
+                    console.error('Error checking username:', error);
+                    const statusMessageDiv = document.getElementById('statusMessage');
+                    statusMessageDiv.innerHTML = '<p>Error checking username. Please try again later.</p>';
+                });
+        }
+    </script>
+</body>
+</html>
