@@ -21,7 +21,7 @@
                 return;
             }
             
-            const apiUrl = `https://api.allorigins.win/raw?url=https://api.scratch.mit.edu/studios/${studioId}`;
+            const apiUrl = `https://corsproxy.io/?https://api.scratch.mit.edu/studios/${studioId}`;
 
             fetch(apiUrl)
                 .then(response => response.json())
