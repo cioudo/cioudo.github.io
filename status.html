@@ -30,12 +30,12 @@
           // Handle the retrieved data
           const statusElement = document.getElementById('status');
           statusElement.innerHTML = `
-            <p><strong>Version:</strong> ${data.version}</p>
-            <p><strong>Uptime:</strong> ${data.uptime} seconds</p>
-            <p>Load: ${data.load}</p>
-            <p>Timestamp: ${new Date(data.timestamp)}</p>
-            <p>Connected: ${data.cache.connected}</p>
-            <p>Ready: ${data.cache.ready}</p>
+            <p><strong>Version:</strong> <span>${data.version}</span></p>
+            <p><strong>Uptime:</strong> <span>${data.uptime} seconds</span></p>
+            <p><strong>Load:</strong> ${data.load}</p>
+            <p><strong>Timestamp:</strong> ${new Date(data.timestamp)}</p>
+            <p><strong>Connected:</strong> ${data.cache.connected}</p>
+            <p><strong>Ready:</strong> ${data.cache.ready}</p>
           `;
         })
         .catch(error => {
