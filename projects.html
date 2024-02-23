@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Scratch Project Data</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scratch Project Data</title>
 </head>
 <body>
     <h1>Project Data</h1>
@@ -21,7 +21,7 @@
                 return;
             }
             
-            const apiUrl = `https://corsproxy.io/?https://api.scratch.mit.edu/projects/${projectId}`;
+            const apiUrl = `https://api.allorigins.win/raw?url=https://api.scratch.mit.edu/projects/${projectId}`;
 
             fetch(apiUrl)
                 .then(response => response.json())
