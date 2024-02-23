@@ -16,7 +16,7 @@
         // Function to fetch message count from Scratch API via allorigins
         function fetchMessageCount() {
             const username = document.getElementById('username').value;
-            fetch(`https://api.allorigins.win/raw?url=https://api.scratch.mit.edu/users/${username}/messages/count`)
+            fetch(`https://corsproxy.io/?https://api.scratch.mit.edu/users/${username}/messages/count`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
