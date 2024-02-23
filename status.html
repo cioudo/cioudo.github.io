@@ -30,8 +30,8 @@
           // Handle the retrieved data
           const statusElement = document.getElementById('status');
           statusElement.innerHTML = `
-            <p>Version: ${data.version}</p>
-            <p>Uptime: ${data.uptime} seconds</p>
+            <p><strong>Version:</strong> ${data.version}</p>
+            <p><strong>Uptime:</strong> ${data.uptime} seconds</p>
             <p>Load: ${data.load}</p>
             <p>Timestamp: ${new Date(data.timestamp)}</p>
             <p>Connected: ${data.cache.connected}</p>
