@@ -13,10 +13,10 @@
     <p id="message-count"></p>
 
     <script>
-        // Function to fetch message count from Scratch API via thingproxy
+        // Function to fetch message count from Scratch API via corsproxy.io
         function fetchMessageCount() {
             const username = document.getElementById('username').value;
-            fetch(`https://thingproxy.freeboard.io/fetch/https://api.scratch.mit.edu/users/${username}/messages/count`)
+            fetch(`https://corsproxy.io/?https://cors-anywhere.herokuapp.com/https://api.scratch.mit.edu/users/${username}/messages/count`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
