@@ -1,8 +1,49 @@
-body {
-    font-family: 'Montserrat', sans-serif;
+/* Resetten van standaardstijlen om een schone lei te creëren */
+body, h1, p {
+    margin: 0;
+    padding: 0;
 }
 
-a {
-    text-decoration: underline;
-    color: blue;
+body {
+    font-family: Arial, sans-serif; /* Standaard lettertype */
+    background-color: #f2f2f2; /* Achtergrondkleur van de pagina */
+    color: #333; /* Standaardtekstkleur */
+}
+
+.container {
+    max-width: 800px; /* Maximale breedte van de container */
+    margin: 0 auto; /* Centreren van de container op de pagina */
+    padding: 20px; /* Ruimte rondom de inhoud van de container */
+}
+
+header {
+    text-align: center; /* Centreren van de tekst in de koptekst */
+    margin-bottom: 20px; /* Ruimte onder de koptekst */
+}
+
+nav {
+    text-align: center; /* Centreren van de navigatielinks */
+    margin-bottom: 20px; /* Ruimte onder de navigatie */
+}
+
+nav a {
+    text-decoration: none; /* Geen onderstreping onder de navigatielinks */
+    color: #555; /* Kleur van de navigatielinks */
+    margin: 0 10px; /* Ruimte tussen de navigatielinks */
+}
+
+nav a:hover {
+    color: #000; /* Kleur van de navigatielinks bij zweven */
+}
+
+main {
+    text-align: center; /* Centreren van de inhoud */
+}
+
+footer {
+    text-align: center; /* Centreren van de tekst in de voettekst */
+    margin-top: 50px; /* Ruimte boven de voettekst */
+    padding: 10px 0; /* Ruimte rondom de inhoud van de voettekst */
+    background-color: #333; /* Achtergrondkleur van de voettekst */
+    color: #fff; /* Tekstkleur van de voettekst */
 }
