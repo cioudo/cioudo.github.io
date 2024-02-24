@@ -16,17 +16,20 @@
     <div id="result"></div>
 
     <script>
-        // Function to fetch cryptocurrencies from CoinGecko API and populate the select options
+        // Function to fetch and populate crypto options
         function populateCryptoOptions() {
             fetch('https://api.coingecko.com/api/v3/coins/list')
                 .then(response => response.json())
                 .then(data => {
                     const cryptoSelect = document.getElementById('cryptoSelect');
                     data.forEach(crypto => {
-                        const option = document.createElement('option');
-                        option.value = crypto.id;
-                        option.text = crypto.name;
-                        cryptoSelect.appendChild(option);
+                        // Filtering only the popular cryptocurrencies
+                        if (crypto.market_cap_rank && crypto.market_cap_rank <= 100) {
+                            const option = document.createElement('option');
+                            option.value = crypto.id;
+                            option.text = crypto.name;
+                            cryptoSelect.appendChild(option);
+                        }
                     });
                 })
                 .catch(error => {
