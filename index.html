@@ -8,11 +8,11 @@
 </head>
 <body>
     <script>
-        // Definieer het wachtwoord
-        var correctPassword = "jouw_wachtwoord";
+        // Haal het wachtwoord op uit het geheim
+        var correctPassword = process.env.PASSWORD; // Pas dit aan als je het geheim op een andere manier hebt opgeslagen
 
         // Vraag de gebruiker om het wachtwoord in te voeren
-        var password = prompt("Voer het wachtwoord in:");
+        var password = prompt("This page is secured, enter password:");
 
         // Controleer of het ingevoerde wachtwoord correct is
         if(password !== correctPassword) {
