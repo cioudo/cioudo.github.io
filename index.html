@@ -1,35 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Protected Page</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-</head>
-<body>
-    <script>
-        // Haal het wachtwoord op uit het geheim
-        var correctPassword = process.env.PASSWORD; // Pas dit aan als je het geheim op een andere manier hebt opgeslagen
+<title>ScratchTools</title>
 
-        // Vraag de gebruiker om het wachtwoord in te voeren
-        var password = prompt("This page is secured, enter password:");
+<link rel="stylesheet" type="text/css" href="styles.css">
 
-        // Controleer of het ingevoerde wachtwoord correct is
-        if(password !== correctPassword) {
-            // Als het wachtwoord niet correct is, herlaad dan de pagina om de gebruiker te dwingen het opnieuw te proberen
-            alert("Onjuist wachtwoord! Probeer het opnieuw.");
-            location.reload();
-        }
-    </script>
-
-    <!-- Hier komt de inhoud van je pagina -->
-    <h1>ScratchTools by <span><a href="https://scratch.mit.edu/users/cIoudo/" style="text-decoration: underline;">@cioudo</a></span></h1>
-    <a href="https://cioudo.github.io/usernamecheck">Username check</a><br>
-    <a href="https://cioudo.github.io/users">User data</a><br>
-    <a href="https://cioudo.github.io/projects">Project data</a><br>
-    <a href="https://cioudo.github.io/studios">Studio data</a><br>
-    <a href="https://cioudo.github.io/followers">Followers tool</a><br>
-    <a href="https://cioudo.github.io/messages">Messages tool</a><br>
-    <a href="https://cioudo.github.io/status">Scratch status</a><br>
-</body>
-</html>
+<h1>ScratchTools by <span><a href="https://scratch.mit.edu/users/cIoudo/" style="text-decoration: underline;">@cioudo</a></span></h1>
+<a href="https://cioudo.github.io/usernamecheck">Username check</a><br>
+<a href="https://cioudo.github.io/users">User data</a><br>
+<a href="https://cioudo.github.io/projects">Project data</a><br>
+<a href="https://cioudo.github.io/studios">Studio data</a><br>
+<a href="https://cioudo.github.io/followers">Followers tool</a><br>
+<a href="https://cioudo.github.io/messages">Messages tool</a><br>
+<a href="https://cioudo.github.io/status">Scratch status</a><br>
