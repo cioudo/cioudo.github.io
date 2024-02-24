@@ -10,14 +10,31 @@
     <label for="cryptoInput">Enter amount of cryptocurrency:</label>
     <input type="number" id="cryptoInput">
     <select id="cryptoSelect">
-        <option value="bitcoin">Bitcoin</option>
-        <option value="ethereum">Ethereum</option>
-        <!-- Add more options as needed -->
+        <!-- Crypto options will be dynamically added here -->
     </select>
     <button onclick="convert()">Convert</button>
     <div id="result"></div>
 
     <script>
+        // Function to fetch cryptocurrencies from CoinGecko API and populate the select options
+        function populateCryptoOptions() {
+            fetch('https://api.coingecko.com/api/v3/coins/list')
+                .then(response => response.json())
+                .then(data => {
+                    const cryptoSelect = document.getElementById('cryptoSelect');
+                    data.forEach(crypto => {
+                        const option = document.createElement('option');
+                        option.value = crypto.id;
+                        option.text = crypto.name;
+                        cryptoSelect.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        // Function to convert cryptocurrency to euro
         function convert() {
             const amount = document.getElementById('cryptoInput').value;
             const crypto = document.getElementById('cryptoSelect').value;
@@ -33,6 +50,9 @@
                     document.getElementById('result').innerText = 'An error occurred. Please try again later.';
                 });
         }
+
+        // Call the function to populate crypto options when the page loads
+        window.onload = populateCryptoOptions;
     </script>
 </body>
 </html>
