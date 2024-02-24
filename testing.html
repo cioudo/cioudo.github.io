@@ -16,25 +16,24 @@
     <div id="result"></div>
 
     <script>
-        // Function to fetch and populate crypto options
+        // Predefined list of popular cryptocurrencies
+        const popularCryptos = [
+            { id: 'bitcoin', name: 'Bitcoin' },
+            { id: 'ethereum', name: 'Ethereum' },
+            { id: 'ripple', name: 'XRP' },
+            { id: 'litecoin', name: 'Litecoin' },
+            // Add more popular cryptocurrencies as needed
+        ];
+
+        // Function to populate crypto options
         function populateCryptoOptions() {
-            fetch('https://api.coingecko.com/api/v3/coins/list')
-                .then(response => response.json())
-                .then(data => {
-                    const cryptoSelect = document.getElementById('cryptoSelect');
-                    data.forEach(crypto => {
-                        // Filtering only the popular cryptocurrencies
-                        if (crypto.market_cap_rank && crypto.market_cap_rank <= 100) {
-                            const option = document.createElement('option');
-                            option.value = crypto.id;
-                            option.text = crypto.name;
-                            cryptoSelect.appendChild(option);
-                        }
-                    });
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+            const cryptoSelect = document.getElementById('cryptoSelect');
+            popularCryptos.forEach(crypto => {
+                const option = document.createElement('option');
+                option.value = crypto.id;
+                option.text = crypto.name;
+                cryptoSelect.appendChild(option);
+            });
         }
 
         // Function to convert cryptocurrency to euro
