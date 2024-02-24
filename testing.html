@@ -1,1 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto to Euro Converter</title>
+</head>
+<body>
+    <h1>Crypto to Euro Converter</h1>
+    <label for="cryptoInput">Enter amount of cryptocurrency:</label>
+    <input type="number" id="cryptoInput">
+    <select id="cryptoSelect">
+        <option value="bitcoin">Bitcoin</option>
+        <option value="ethereum">Ethereum</option>
+        <!-- Add more options as needed -->
+    </select>
+    <button onclick="convert()">Convert</button>
+    <div id="result"></div>
 
+    <script>
+        function convert() {
+            const amount = document.getElementById('cryptoInput').value;
+            const crypto = document.getElementById('cryptoSelect').value;
+            fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${crypto}&vs_currencies=eur`)
+                .then(response => response.json())
+                .then(data => {
+                    const rate = data[crypto].eur;
+                    const euroAmount = amount * rate;
+                    document.getElementById('result').innerText = `${amount} ${crypto.toUpperCase()} is approximately ${euroAmount.toFixed(2)} Euros.`;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('result').innerText = 'An error occurred. Please try again later.';
+                });
+        }
+    </script>
+</body>
+</html>
