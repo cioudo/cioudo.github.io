@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Scratch Message Count</title>
+</head>
+<body>
+    <div id="messageCount"></div>
+
+    <script>
+        // Function to fetch and display message count
+        async function fetchMessageCount() {
+            try {
+                const response = await fetch('https://scratch.mit.edu/messages/ajax/get-message-count/');
+                const data = await response.json();
+                const messageCount = data.msg_count;
+                document.getElementById('messageCount').innerText = `Message Count: ${messageCount}`;
+            } catch (error) {
+                console.error('Error fetching message count:', error);
+                document.getElementById('messageCount').innerText = 'Error fetching message count';
+            }
+        }
+
+        // Call the function on page load
+        fetchMessageCount();
+    </script>
+</body>
+</html>
