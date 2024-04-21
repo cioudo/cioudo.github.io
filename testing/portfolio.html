@@ -82,6 +82,8 @@
     <input type="text" id="title" name="title" required>
     <label for="description">Description:</label>
     <textarea id="description" name="description" required></textarea>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
     <button type="submit">Create Portfolio</button>
 </form>
 
@@ -116,18 +118,31 @@
                     // Add event listeners to delete buttons
                     document.querySelectorAll('.delete-button').forEach(button => {
                         button.addEventListener('click', function() {
-                            deletePortfolio(this.getAttribute('data-id'));
+                            const password = prompt("Please enter password to delete this portfolio:");
+                            if (password) {
+                                deletePortfolio(this.getAttribute('data-id'), password);
+                            }
                         });
                     });
                 });
         }
 
         // Function to delete a portfolio
-        function deletePortfolio(id) {
+        function deletePortfolio(id, password) {
             fetch(`${BASE_URL}/portfolio/${id}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ password: password })
             })
-            .then(() => fetchPortfolios());
+            .then(response => {
+                if (response.ok) {
+                    fetchPortfolios();
+                } else {
+                    alert("Failed to delete portfolio. Incorrect password.");
+                }
+            });
         }
 
         // Event listener for form submission
@@ -136,7 +151,8 @@
             const formData = new FormData(portfolioForm);
             const newPortfolio = {
                 title: formData.get('title'),
-                description: formData.get('description')
+                description: formData.get('description'),
+                password: formData.get('password')
             };
 
             fetch(`${BASE_URL}/portfolio`, {
@@ -146,9 +162,13 @@
                 },
                 body: JSON.stringify(newPortfolio)
             })
-            .then(() => {
-                fetchPortfolios();
-                portfolioForm.reset();
+            .then(response => {
+                if (response.ok) {
+                    fetchPortfolios();
+                    portfolioForm.reset();
+                } else {
+                    alert("Failed to create portfolio. Incorrect password.");
+                }
             });
         });
 
