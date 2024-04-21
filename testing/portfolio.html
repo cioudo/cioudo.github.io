@@ -19,7 +19,6 @@
             background-color: #fff;
             padding: 20px;
             border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
         }
         label {
@@ -27,7 +26,7 @@
             margin-bottom: 5px;
             font-weight: bold;
         }
-        input[type="text"], textarea {
+        input[type="text"], textarea, input[type="password"] {
             width: 100%;
             padding: 8px;
             margin-bottom: 10px;
@@ -50,7 +49,6 @@
             background-color: #fff;
             padding: 20px;
             border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
         }
         .portfolio-item h3 {
@@ -71,6 +69,37 @@
         .delete-button:hover {
             background-color: #c82333;
         }
+        .delete-form-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+        .delete-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #dc3545;
+            border: none;
+            cursor: pointer;
+        }
+
+        .close-button:hover {
+            background-color: #c82333;
+        }
     </style>
 </head>
 <body>
@@ -89,6 +118,17 @@
 
 <div id="portfolioList"></div>
 
+<div id="deleteFormContainer" class="delete-form-container">
+    <div id="deleteForm" class="delete-form">
+        <button id="closeButton" class="close-button">X</button>
+        <form id="deletePortfolioForm">
+            <label for="deletePassword">Password:</label>
+            <input type="password" id="deletePassword" name="password" required>
+            <button type="submit">Delete</button>
+        </form>
+    </div>
+</div>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         // Define base URL of the API
@@ -97,6 +137,10 @@
         // Reference to form and portfolio list elements
         const portfolioForm = document.getElementById("portfolioForm");
         const portfolioList = document.getElementById("portfolioList");
+        const deleteFormContainer = document.getElementById("deleteFormContainer");
+        const deleteForm = document.getElementById("deleteForm");
+        const deletePortfolioForm = document.getElementById("deletePortfolioForm");
+        const closeButton = document.getElementById("closeButton");
 
         // Function to fetch and display portfolios
         function fetchPortfolios() {
@@ -118,10 +162,8 @@
                     // Add event listeners to delete buttons
                     document.querySelectorAll('.delete-button').forEach(button => {
                         button.addEventListener('click', function() {
-                            const password = prompt("Please enter password to delete this portfolio:");
-                            if (password) {
-                                deletePortfolio(this.getAttribute('data-id'), password);
-                            }
+                            deleteFormContainer.style.display = "flex";
+                            deletePortfolioForm.setAttribute('data-id', this.getAttribute('data-id'));
                         });
                     });
                 });
@@ -129,23 +171,27 @@
 
         // Function to delete a portfolio
         function deletePortfolio(id, password) {
+            const data = { password };
             fetch(`${BASE_URL}/portfolio/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ password: password })
+                body: JSON.stringify(data)
             })
             .then(response => {
-                if (response.ok) {
-                    fetchPortfolios();
-                } else {
-                    alert("Failed to delete portfolio. Incorrect password.");
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        alert(err.error || "Error deleting portfolio");
+                    });
                 }
-            });
+                fetchPortfolios();
+                deleteFormContainer.style.display = "none";
+            })
+            .catch(err => console.error("Error:", err));
         }
 
-        // Event listener for form submission
+        // Event listener for form submission (Create Portfolio)
         portfolioForm.addEventListener('submit', function (event) {
             event.preventDefault();
             const formData = new FormData(portfolioForm);
@@ -163,13 +209,28 @@
                 body: JSON.stringify(newPortfolio)
             })
             .then(response => {
-                if (response.ok) {
-                    fetchPortfolios();
-                    portfolioForm.reset();
-                } else {
-                    alert("Failed to create portfolio. Incorrect password.");
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        alert(err.error || "Error creating portfolio");
+                    });
                 }
-            });
+                fetchPortfolios();
+                portfolioForm.reset();
+            })
+            .catch(err => console.error("Error:", err));
+        });
+
+        // Event listener for form submission (Delete Portfolio)
+        deletePortfolioForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const password = document.getElementById("deletePassword").value;
+            const id = this.getAttribute('data-id');
+            deletePortfolio(id, password);
+        });
+
+        // Event listener for close button
+        closeButton.addEventListener('click', function() {
+            deleteFormContainer.style.display = "none";
         });
 
         // Initial fetch
